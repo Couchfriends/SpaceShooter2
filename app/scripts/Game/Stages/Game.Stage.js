@@ -22,14 +22,10 @@ Game.Stage = function() {
      * Callback before a new stage is rendered.
      * @param callback the callback after exit is complete
      */
-    this.exit = function(callback) {
+    this.stop = function() {
         for (var i = 0; i < this.objects.length; i++) {
             var object = this.objects[i];
             object.remove();
-        }
-        this.objects = [];
-        if (typeof callback === 'function') {
-            callback.call(this);
         }
     };
 

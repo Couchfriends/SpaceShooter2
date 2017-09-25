@@ -2,13 +2,13 @@
  * Global object class
  * @constructor
  */
-Game.Element = function () {
+Game.Element = function() {
 
     /**
      * Pixi.js object
      * @type {{}}
      */
-    this.object = {};
+    this.object = null;
 
     /**
      * List with events that can be added
@@ -28,25 +28,25 @@ Game.Element = function () {
 
 Game.Element.prototype = {
 
-    init: function () {
+    init: function() {
 
     },
 
-    add: function () {
+    add: function() {
+
         Game.currentStage.objects.push(this);
-        if (this.object !== {}) {
-            this.object.Element = this;
+        if (this.object !== null) {
             Game.stage.addChild(this.object);
         }
         this.fireEvents(this.events.add);
     },
 
-    remove: function () {
-        if (this.object !== {}) {
+    remove: function() {
+        if (this.object !== null) {
             Game.stage.removeChild(this.object);
         }
         var indexOf = Game.currentStage.objects.indexOf(this);
-        Game.currentStage.objects.splice(indexOf, 1);
+        delete Game.currentStage.objects[indexOf];//.splice(indexOf, 1);
     },
 
     /**
@@ -54,10 +54,9 @@ Game.Element.prototype = {
      * @param time
      * @returns {boolean}
      */
-    update: function (time) {
-    },
+    update: function(time) {},
 
-    fireEvents: function (events) {
+    fireEvents: function(events) {
         for (var i = 0; i < events.length; i++) {
             var event = events[i];
             event.call(this);

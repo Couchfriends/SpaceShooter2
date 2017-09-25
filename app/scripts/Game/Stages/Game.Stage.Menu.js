@@ -15,20 +15,23 @@ Game.Stage.Menu = function() {
         buttonStart.init('Start Game');
         buttonStart.add();
 
-        var buttonStart = new Game.Button();
-        buttonStart.init('Options');
-        buttonStart.object.y = 120;
-        buttonStart.add();
+        var buttonStart2 = new Game.Button();
+        buttonStart2.clickUp = function() {
+            Game.setStage(Game.Stage.MenuOptions)
+        };
+        buttonStart2.init('Options');
+        buttonStart2.object.y = 120;
+        buttonStart2.add();
 
-        var buttonStart = new Game.Button();
-        buttonStart.init('Credits');
-        buttonStart.object.y = 150;
-        buttonStart.add();
+        var buttonStart3 = new Game.Button();
+        buttonStart3.init('Credits');
+        buttonStart3.object.y = 150;
+        buttonStart3.add();
 
-        var buttonStart = new Game.Button();
-        buttonStart.init('Exit');
-        buttonStart.object.y = 180;
-        buttonStart.add();
+        var buttonStart4 = new Game.Button();
+        buttonStart4.init('Exit');
+        buttonStart4.object.y = 180;
+        buttonStart4.add();
     }
 
 };

@@ -12,7 +12,7 @@ var Game = Game || {
     /**
      * The current stage to render
      */
-    currentStage: {},
+    currentStage: null,
 
     run: function() {
         PIXI.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
@@ -31,6 +31,9 @@ var Game = Game || {
     },
 
     setStage: function(Stage) {
+        if (this.currentStage !== null) {
+            this.currentStage.stop();
+        }
         this.currentStage = new Stage();
         this.currentStage.load(function() {
             Game.currentStage.start();
@@ -57,7 +60,7 @@ var Game = Game || {
      * @param t
      */
     render: function(t) {
-        if (Game.currentStage === {}) {
+        if (Game.currentStage === null) {
             requestAnimationFrame(Game.render);
             return;
         }
