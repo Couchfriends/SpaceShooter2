@@ -2,10 +2,21 @@ var Game = Game || {
 
     renderer: null,
     stage: null,
+    /**
+     * Default settings
+     */
     settings: {
         resolution: {
-            width: 800,
-            height: 600
+            width: null,
+            height: null
+        },
+        sound: {
+            mute: false,
+            volume: 1
+        },
+        music: {
+            mute: false,
+            volume: .5
         }
     },
 
@@ -15,6 +26,7 @@ var Game = Game || {
     currentStage: null,
 
     run: function() {
+        this.loadSettings();
         PIXI.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
         this.renderer = new PIXI.autoDetectRenderer(null, null, {
             backgroundColor: 0x1099bb
@@ -25,9 +37,28 @@ var Game = Game || {
         window.onresize = function() {
             Game.resize();
         };
+        Game.resize();
         this.setStage(Game.Stage.Menu);
         Game.render();
-        Game.resize();
+    },
+
+    loadSettings: function() {
+        var storedSettings = window.localStorage.getItem('settings');
+        if (storedSettings === null) {
+            return Game.settings;
+        }
+        try {
+            storedSettings = JSON.parse(storedSettings);
+        } catch (Exception) {
+            return Game.settings;
+        }
+        return _.merge(Game.settings, storedSettings);
+    },
+
+    saveSetting: function(objSetting) {
+        var settings = _.merge(this.loadSettings(), objSetting);
+        window.localStorage.setItem('settings', JSON.stringify(settings));
+        Game.settings = settings;
     },
 
     setStage: function(Stage) {
@@ -46,13 +77,11 @@ var Game = Game || {
      * @param height || window.innerHeight
      */
     resize: function(width, height) {
-        width = width || window.innerWidth;
-        height = height || window.innerHeight;
-        this.renderer.view.style.width = width + "px";
-        this.renderer.view.style.height = height + "px";
+        width = width || Game.settings.resolution.width || window.innerWidth;
+        height = height || Game.settings.resolution.height || window.innerHeight;
         this.renderer.resize(width, height);
-        this.settings.resolution.width = width;
-        this.settings.resolution.height = height;
+        Game.settings.resolution.width = width;
+        Game.settings.resolution.height = height;
     },
 
     /**

@@ -39,6 +39,7 @@ module.exports = function(grunt) {
         '<%= config.app %>/scripts/Game/Stages/Game.Stage.js',
         '<%= config.app %>/scripts/Game/Stages/Game.Stage.Menu.js',
         '<%= config.app %>/scripts/Game/Stages/Game.Stage.MenuOptions.js',
+        '<%= config.app %>/scripts/Game/Stages/Game.Stage.MenuOptionsSounds.js',
         '<%= config.app %>/scripts/app.js'
     ];
 

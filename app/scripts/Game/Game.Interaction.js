@@ -29,13 +29,9 @@ Game.Interaction = function() {
 
     this.events.add.push(this.addInteractions);
 
-    this.clickDown = function() {
-    };
-    this.clickUp = function() {
-    };
-    this.mouseHover = function() {
-    };
-    this.mouseOut = function() {
-    }
+    this.clickDown = function() {};
+    this.clickUp = function() {};
+    this.mouseHover = function() {};
+    this.mouseOut = function() {}
 
 };

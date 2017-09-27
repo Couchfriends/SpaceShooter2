@@ -46,7 +46,7 @@ Game.Element.prototype = {
             Game.stage.removeChild(this.object);
         }
         var indexOf = Game.currentStage.objects.indexOf(this);
-        delete Game.currentStage.objects[indexOf];//.splice(indexOf, 1);
+        delete Game.currentStage.objects[indexOf]; //.splice(indexOf, 1);
     },
 
     /**
