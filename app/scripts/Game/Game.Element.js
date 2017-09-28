@@ -33,15 +33,15 @@ Game.Element.prototype = {
     },
 
     add: function() {
-
+        this.fireEvents(this.events.add);
         Game.currentStage.objects.push(this);
         if (this.object !== null) {
             Game.stage.addChild(this.object);
         }
-        this.fireEvents(this.events.add);
     },
 
     remove: function() {
+        this.fireEvents(this.events.remove);
         if (this.object !== null) {
             Game.stage.removeChild(this.object);
         }

@@ -47,25 +47,8 @@ var Game = Game || {
      */
     currentStage: null,
 
-    /**
-     * Set the current mission
-     * @param missionIndex optional next mission index. If the last mission is finished, restart with more difficult.
-     */
-    setCurrentMission: function(missionIndex) {
-        missionIndex = missionIndex || Game.game.currentMissionIndex;
-        var difficultyMultiplier = Game.game.difficultyMultiplier;
-        if (typeof Game.missions[missionIndex] === 'undefined') {
-            missionIndex = 0;
-            difficultyMultiplier++;
-        }
-        Game.currentMission = Game.missions[missionIndex];
-        Game.saveGame({
-            currentMissionIndex: missionIndex,
-            difficultyMultiplier: difficultyMultiplier
-        });
-    },
-
     run: function() {
+        document.getElementById('loader').style.display = 'none';
         this.loadSettings();
         PIXI.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
         this.renderer = new PIXI.autoDetectRenderer(null, null, {
@@ -120,6 +103,24 @@ var Game = Game || {
         Game.game = game;
     },
 
+    /**
+     * Set the current mission
+     * @param missionIndex optional next mission index. If the last mission is finished, restart with more difficult.
+     */
+    setMission: function(missionIndex) {
+        missionIndex = missionIndex || Game.game.currentMissionIndex;
+        var difficultyMultiplier = Game.game.difficultyMultiplier;
+        if (typeof Game.missions[missionIndex] === 'undefined') {
+            missionIndex = 0;
+            difficultyMultiplier++;
+        }
+        Game.currentMission = Game.missions[missionIndex];
+        Game.saveGame({
+            currentMissionIndex: missionIndex,
+            difficultyMultiplier: difficultyMultiplier
+        });
+    },
+
     setStage: function(Stage) {
         if (this.currentStage !== null) {
             this.currentStage.stop();
@@ -128,6 +129,24 @@ var Game = Game || {
         this.currentStage.load(function() {
             Game.currentStage.start();
         });
+    },
+
+    /**
+     * Add score. Do not save the game here.
+     * @param score
+     */
+    addScore: function(score) {
+        score = score || 0;
+        Game.game.score += score;
+    },
+
+    /**
+     * Add money. Do not save the game here.
+     * @param money
+     */
+    addMoney: function(money) {
+        money = money || 0;
+        Game.game.money += money;
     },
 
     /**

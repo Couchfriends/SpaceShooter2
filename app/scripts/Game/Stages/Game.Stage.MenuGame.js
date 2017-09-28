@@ -6,8 +6,12 @@ Game.Stage.MenuGame = function() {
 
     Game.Stage.call(this, arguments);
 
+    this.preloadObjects = [
+        'data/images/menu/captain.png'
+    ];
+
     this.start = function() {
-        Game.setCurrentMission();
+        Game.setMission();
 
         var button = new Game.Button();
         button.clickUp = function() {
