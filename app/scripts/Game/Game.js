@@ -6,9 +6,12 @@ var Game = Game || {
      * Default settings
      */
     settings: {
-        resolution: {
-            width: null,
-            height: null
+        video: {
+            resolution: {
+                width: null,
+                height: null
+            },
+            particles: true
         },
         sound: {
             mute: false,
@@ -20,16 +23,53 @@ var Game = Game || {
         }
     },
 
+    game: {
+        score: 0,
+        money: 0,
+        difficultyMultiplier: 1,
+        currentMissionIndex: 0,
+        ship: {
+            // @todo
+            weapons: []
+        }
+    },
+
+    /**
+     * Current mission loaded from Game.Missions
+     */
+    currentMission: {
+        title: "",
+        message: ""
+    },
+
     /**
      * The current stage to render
      */
     currentStage: null,
 
+    /**
+     * Set the current mission
+     * @param missionIndex optional next mission index. If the last mission is finished, restart with more difficult.
+     */
+    setCurrentMission: function(missionIndex) {
+        missionIndex = missionIndex || Game.game.currentMissionIndex;
+        var difficultyMultiplier = Game.game.difficultyMultiplier;
+        if (typeof Game.missions[missionIndex] === 'undefined') {
+            missionIndex = 0;
+            difficultyMultiplier++;
+        }
+        Game.currentMission = Game.missions[missionIndex];
+        Game.saveGame({
+            currentMissionIndex: missionIndex,
+            difficultyMultiplier: difficultyMultiplier
+        });
+    },
+
     run: function() {
         this.loadSettings();
         PIXI.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
         this.renderer = new PIXI.autoDetectRenderer(null, null, {
-            backgroundColor: 0x1099bb
+            backgroundColor: 0x1099cc
         });
         this.renderer.view.setAttribute('class', 'renderer');
         this.stage = new PIXI.Container();
@@ -61,6 +101,25 @@ var Game = Game || {
         Game.settings = settings;
     },
 
+    loadGame: function() {
+        var storedGame = window.localStorage.getItem('game');
+        if (storedGame === null) {
+            return Game.game;
+        }
+        try {
+            storedGame = JSON.parse(storedGame);
+        } catch (Exception) {
+            return Game.game;
+        }
+        return _.merge(Game.game, storedGame);
+    },
+
+    saveGame: function(objGame) {
+        var game = _.merge(this.loadGame(), objGame);
+        window.localStorage.setItem('game', JSON.stringify(game));
+        Game.game = game;
+    },
+
     setStage: function(Stage) {
         if (this.currentStage !== null) {
             this.currentStage.stop();
@@ -77,11 +136,11 @@ var Game = Game || {
      * @param height || window.innerHeight
      */
     resize: function(width, height) {
-        width = width || Game.settings.resolution.width || window.innerWidth;
-        height = height || Game.settings.resolution.height || window.innerHeight;
+        width = width || Game.settings.video.resolution.width || window.innerWidth;
+        height = height || Game.settings.video.resolution.height || window.innerHeight;
         this.renderer.resize(width, height);
-        Game.settings.resolution.width = width;
-        Game.settings.resolution.height = height;
+        Game.settings.video.resolution.width = width;
+        Game.settings.video.resolution.height = height;
     },
 
     /**

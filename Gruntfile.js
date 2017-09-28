@@ -35,11 +35,15 @@ module.exports = function(grunt) {
         '<%= config.app %>/scripts/Game/Game.js',
         '<%= config.app %>/scripts/Game/Game.Element.js',
         '<%= config.app %>/scripts/Game/Game.Interaction.js',
+        '<%= config.app %>/scripts/Game/Missions/Game.Missions.js',
         '<%= config.app %>/scripts/Game/Menu/Game.Button.js',
         '<%= config.app %>/scripts/Game/Stages/Game.Stage.js',
         '<%= config.app %>/scripts/Game/Stages/Game.Stage.Menu.js',
         '<%= config.app %>/scripts/Game/Stages/Game.Stage.MenuOptions.js',
         '<%= config.app %>/scripts/Game/Stages/Game.Stage.MenuOptionsSounds.js',
+        '<%= config.app %>/scripts/Game/Stages/Game.Stage.MenuOptionsVideo.js',
+        '<%= config.app %>/scripts/Game/Stages/Game.Stage.MenuGame.js',
+        '<%= config.app %>/scripts/Game/Stages/Game/Game.Stage.Game.js',
         '<%= config.app %>/scripts/app.js'
     ];
 

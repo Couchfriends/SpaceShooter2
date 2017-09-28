@@ -6,14 +6,25 @@ Game.Stage = function() {
 
     this.objects = [];
 
+    this.preloadObjects = [];
+
     /**
      * Load the objects for this stage
-     * @todo
+     * Callback should always include start() of the currentScene. Game.currentScene.start();
      */
     this.load = function(callback) {
-        if (typeof callback === 'function') {
-            callback.call(this);
+        if (this.preloadObjects.length === 0) {
+            return callback();
         }
+        var loader = new PIXI.loaders.Loader();
+        for (var i = 0; i < this.preloadObjects.length; i++) {
+            var sprite = this.preloadObjects[i];
+            loader.add(sprite);
+        }
+        loader.on('progress', function(process) {
+            console.log(process);
+        });
+        loader.load(callback);
     };
 
     this.start = function() {};

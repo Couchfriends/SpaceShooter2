@@ -2,46 +2,43 @@
  * The main Stage object of a stage in game. E.g. used for a level, game, etc
  * @constructor
  */
-Game.Stage.MenuOptionsSounds = function() {
+Game.Stage.MenuOptionsVideo = function() {
 
     Game.Stage.call(this, arguments);
 
     this.start = function() {
         var buttons = [];
         buttons.push({
-            "label": (Game.settings.sound.mute) ? "Sound: off" : "Sound: on",
+            "label": (Game.settings.video.particles) ? "Particles: high" : "Particles: off",
             "click": function() {
-                var setMute = true;
-                var label = "off";
-                if (Game.settings.sound.mute === true) {
-                    setMute = false;
-                    label = "on";
+                var setParticles = true;
+                var label = "high";
+                if (Game.settings.video.particles === true) {
+                    setParticles = false;
+                    label = "off";
                 }
                 var setting = {
-                    sound: {
-                        mute: setMute
+                    video: {
+                        particles: setParticles
                     }
                 };
                 Game.saveSetting(setting);
-                this.object.text = 'Sound: ' + label;
+                this.object.text = 'Particles: ' + label;
             }
         });
         buttons.push({
-            "label": (Game.settings.music.mute) ? "Music: off" : "Music: on",
+            "label": "Video resolution: " + Game.settings.video.resolution.width + "x" + Game.settings.video.resolution.height,
             "click": function() {
-                var setMute = true;
-                var label = "off";
-                if (Game.settings.music.mute === true) {
-                    setMute = false;
-                    label = "on";
-                }
                 var setting = {
-                    music: {
-                        mute: setMute
+                    video: {
+                        resolution: {
+                            width: window.innerWidth,
+                            height: window.innerHeight
+                        }
                     }
                 };
                 Game.saveSetting(setting);
-                this.object.text = 'Music: ' + label;
+                window.location.reload();
             }
         });
         buttons.push({
