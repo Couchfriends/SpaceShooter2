@@ -20,19 +20,20 @@ Game.Stage.MenuGame = function() {
         button.init('Return to menu');
         button.object.anchor.x = 1;
         button.object.anchor.y = .5;
-        button.object.x = Game.renderer.width - 30;
-        button.object.y = Game.renderer.height - 30;
+        button.object.x = Game.app.renderer.width - 30;
+        button.object.y = Game.app.renderer.height - 30;
         button.add();
 
         var button = new Game.Button();
         button.clickUp = function() {
-            Game.setStage(Game.Stage.Game)
+            Game.pointerLock();
+            Game.setStage(Game.Stage.Game);
         };
         button.init('Play mission');
         button.object.anchor.x = 0;
         button.object.anchor.y = .5;
         button.object.x = 30;
-        button.object.y = Game.renderer.height - 30;
+        button.object.y = Game.app.renderer.height - 30;
         button.add();
 
         var MissionTitle = new Game.Element();

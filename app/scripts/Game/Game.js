@@ -1,7 +1,6 @@
 var Game = Game || {
 
-    renderer: null,
-    stage: null,
+    app: null,
     /**
      * Default settings
      */
@@ -23,6 +22,8 @@ var Game = Game || {
         }
     },
 
+    status: 'pauze',
+
     game: {
         score: 0,
         money: 0,
@@ -43,6 +44,15 @@ var Game = Game || {
     },
 
     /**
+     * The event of the mouse pointer lock API will be updated here.
+     * Default movementX and movementY will be used
+     */
+    mouse: {
+        movementX: 0,
+        movementY: 0
+    },
+
+    /**
      * The current stage to render
      */
     currentStage: null,
@@ -50,19 +60,27 @@ var Game = Game || {
     run: function() {
         document.getElementById('loader').style.display = 'none';
         this.loadSettings();
-        PIXI.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
-        this.renderer = new PIXI.autoDetectRenderer(null, null, {
-            backgroundColor: 0x1099cc
+        // PIXI.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+        this.app = new PIXI.Application(this.settings.video.resolution.width, this.settings.video.resolution.height, {backgroundColor : 0x1099bb});
+        this.app.view.setAttribute('class', 'renderer');
+        document.body.appendChild(this.app.view);
+        this.app.start();
+        this.setStage(Game.Stage.Menu);
+        Game.setEvents();
+        Game.resize();
+        this.app.ticker.add(function(delta) {
+            Game.update(delta);
         });
-        this.renderer.view.setAttribute('class', 'renderer');
-        this.stage = new PIXI.Container();
-        document.body.appendChild(this.renderer.view);
+    },
+
+    setEvents: function() {
         window.onresize = function() {
             Game.resize();
         };
-        Game.resize();
-        this.setStage(Game.Stage.Menu);
-        Game.render();
+        Game.app.view.oncontextmenu = function(e) {
+            e.preventDefault();
+        };
+        document.addEventListener('pointerlockchange', Game.pointerLockChanged, false);
     },
 
     loadSettings: function() {
@@ -157,25 +175,51 @@ var Game = Game || {
     resize: function(width, height) {
         width = width || Game.settings.video.resolution.width || window.innerWidth;
         height = height || Game.settings.video.resolution.height || window.innerHeight;
-        this.renderer.resize(width, height);
+        Game.app.renderer.resize(width, height);
         Game.settings.video.resolution.width = width;
         Game.settings.video.resolution.height = height;
+    },
+
+    pointerLockChanged: function() {
+        if (document.pointerLockElement !== Game.app.renderer.view) {
+            Game._removePointerLock();
+        }
+    },
+
+    pointerLock: function() {
+        Game.app.renderer.view.requestPointerLock();
+        Game.app.renderer.view.addEventListener("mousemove", Game.updateMousePosition, false);
+        Game.status = 'play';
+    },
+
+    exitPointerLock: function() {
+        document.exitPointerLock();
+        Game._removePointerLock();
+    },
+
+    _removePointerLock: function() {
+        Game.app.renderer.view.removeEventListener("mousemove", Game.updateMousePosition, false);
+        Game.mouse.movementX = 0;
+        Game.mouse.movementY = 0;
+        Game.status = 'pauze';
+    },
+
+    updateMousePosition: function(event) {
+        Game.mouse.movementX = event.movementX;
+        Game.mouse.movementY = event.movementY;
     },
 
     /**
      * The main loop of the application
      * @param t
      */
-    render: function(t) {
+    update: function(deltaTime) {
         if (Game.currentStage === null) {
-            requestAnimationFrame(Game.render);
             return;
         }
         for (var i = 0; i < Game.currentStage.objects.length; i++) {
             var object = Game.currentStage.objects[i];
             object.update();
         }
-        Game.renderer.render(Game.stage);
-        requestAnimationFrame(Game.render);
     }
 };

@@ -24,6 +24,6 @@ for (var prop in Game.Interaction.prototype) {
 Game.Button.prototype.init = function(label) {
     this.label = label;
     var text = new PIXI.Text(label, this.style);
-    text.x = Game.renderer.width / 2;
+    text.x = Game.app.renderer.width / 2;
     this.object = text;
 };

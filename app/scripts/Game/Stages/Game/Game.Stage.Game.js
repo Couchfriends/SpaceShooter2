@@ -15,7 +15,6 @@ Game.Stage.Game = function() {
     this.start = function() {
         var Player = new Game.Entity.Player();
         Player.init();
-        console.log(Player);
         Player.add();
     }
 

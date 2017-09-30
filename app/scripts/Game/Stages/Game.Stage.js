@@ -22,7 +22,6 @@ Game.Stage = function() {
             loader.add(sprite);
         }
         loader.on('progress', function(process) {
-            console.log(process);
         });
         loader.load(callback);
     };

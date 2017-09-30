@@ -36,14 +36,14 @@ Game.Element.prototype = {
         this.fireEvents(this.events.add);
         Game.currentStage.objects.push(this);
         if (this.object !== null) {
-            Game.stage.addChild(this.object);
+            Game.app.stage.addChild(this.object);
         }
     },
 
     remove: function() {
         this.fireEvents(this.events.remove);
         if (this.object !== null) {
-            Game.stage.removeChild(this.object);
+            Game.app.stage.removeChild(this.object);
         }
         var indexOf = Game.currentStage.objects.indexOf(this);
         delete Game.currentStage.objects[indexOf]; //.splice(indexOf, 1);
@@ -54,7 +54,7 @@ Game.Element.prototype = {
      * @param time
      * @returns {boolean}
      */
-    update: function(time) {},
+    update: function(delta) {},
 
     fireEvents: function(events) {
         for (var i = 0; i < events.length; i++) {

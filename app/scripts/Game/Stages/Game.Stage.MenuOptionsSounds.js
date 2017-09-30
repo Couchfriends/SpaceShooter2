@@ -50,7 +50,7 @@ Game.Stage.MenuOptionsSounds = function() {
                 Game.setStage(Game.Stage.MenuOptions);
             }
         });
-        var x = Game.renderer.width / 2;
+        var x = Game.app.renderer.width / 2;
         var y = 30;
         for (var i = 0; i < buttons.length; i++) {
             var button = new Game.Button();
