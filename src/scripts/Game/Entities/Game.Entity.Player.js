@@ -8,6 +8,10 @@ Game.Entity.Player = function() {
 
     this.events.remove.push(this.die);
 
+    this.weapons = [
+        Game.Weapon.Basic
+    ];
+
     this.stats = {
         hp: 200
     };
@@ -18,12 +22,19 @@ Game.Entity.Player = function() {
     };
 
     this.init = function() {
-        var object = new PIXI.Sprite.fromImage('data/images/ship/ship001/hull.png');
+        var object = new PIXI.Sprite.fromImage('./data/images/ship/ship001/hull.png');
         object.y = Game.app.renderer.height - 100;
         object.x = Game.app.renderer.width / 2;
         object.anchor.x = .5;
         object.anchor.y = .5;
         this.object = object;
+
+        // Init weapons
+        for (var i = 0; i < this.weapons.length; i++) {
+            var weapon = new this.weapons[i]();
+            weapon.init();
+            weapon.add(this.object);
+        }
     };
 
     this.update = function() {
@@ -32,14 +43,14 @@ Game.Entity.Player = function() {
         if (this.object.x < 0) {
             this.object.x = 0;
         }
-        if (this.object.x > 1920) {
-            this.object.x = 1920;
+        if (this.object.x > Game.app.renderer.width) {
+            this.object.x = Game.app.renderer.width;
         }
         if (this.object.y < 0) {
             this.object.y = 0;
         }
-        if (this.object.y > 1080) {
-            this.object.y = 1080;
+        if (this.object.y > Game.app.renderer.height) {
+            this.object.y = Game.app.renderer.height;
         }
     }
 

@@ -28,22 +28,27 @@ Game.Element = function() {
 
 Game.Element.prototype = {
 
+    addedTo: {},
+
     init: function() {
 
     },
 
-    add: function() {
+    add: function(to) {
         this.fireEvents(this.events.add);
         Game.currentStage.objects.push(this);
         if (this.object !== null) {
-            Game.app.stage.addChild(this.object);
+            this.object.element = this;
+            to = to || Game.app.stage;
+            to.addChild(this.object);
+            this.addedTo = to;
         }
     },
 
     remove: function() {
         this.fireEvents(this.events.remove);
         if (this.object !== null) {
-            Game.app.stage.removeChild(this.object);
+            this.addedTo.removeChild(this.object);
         }
         var indexOf = Game.currentStage.objects.indexOf(this);
         delete Game.currentStage.objects[indexOf]; //.splice(indexOf, 1);

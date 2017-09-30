@@ -7,7 +7,7 @@ Game.Stage.MenuGame = function() {
     Game.Stage.call(this, arguments);
 
     this.preloadObjects = [
-        'data/images/menu/captain.png'
+        './data/images/menu/captain.png'
     ];
 
     this.start = function() {
@@ -62,7 +62,7 @@ Game.Stage.MenuGame = function() {
         MissionText.add();
 
         var Captain = new Game.Element();
-        var object = new PIXI.Sprite.fromImage('data/images/menu/captain.png');
+        var object = new PIXI.Sprite.fromImage('./data/images/menu/captain.png');
         object.y = 30;
         object.x = 500;
         Captain.object = object;

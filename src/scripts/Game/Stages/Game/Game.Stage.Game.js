@@ -7,9 +7,9 @@ Game.Stage.Game = function() {
     Game.Stage.call(this, arguments);
 
     this.preloadObjects = [
-        'data/images/ship/ship001/hull.png',
-        'data/images/ship/ship001/jet.png',
-        'data/images/ship/ship001/gun001.png'
+        './data/images/ship/ship001/hull.png',
+        './data/images/ship/ship001/jet.png',
+        './data/images/ship/ship001/gun001.png'
     ];
 
     this.start = function() {

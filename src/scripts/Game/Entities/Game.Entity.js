@@ -6,6 +6,12 @@ Game.Entity = function() {
 
     Game.Element.call(this);
 
+    /**
+     * List of weapons Elements with a shoot() option
+     * @type {Array}
+     */
+    this.weapons = [];
+
     this.stats = {
         hp: 1,
         score: 10,

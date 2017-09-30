@@ -6,10 +6,6 @@ var Game = Game || {
      */
     settings: {
         video: {
-            resolution: {
-                width: null,
-                height: null
-            },
             particles: true
         },
         sound: {
@@ -25,6 +21,10 @@ var Game = Game || {
     status: 'pauze',
 
     game: {
+        width: 1920,
+        height: 1080,
+        safeWidth: 1680,
+        safeHeight: 720,
         score: 0,
         money: 0,
         difficultyMultiplier: 1,
@@ -61,13 +61,15 @@ var Game = Game || {
         document.getElementById('loader').style.display = 'none';
         this.loadSettings();
         // PIXI.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
-        this.app = new PIXI.Application(this.settings.video.resolution.width, this.settings.video.resolution.height, {backgroundColor : 0x1099bb});
+        this.app = new PIXI.Application(this.game.width, this.game.height, {
+            backgroundColor: 0x1099bb
+        });
         this.app.view.setAttribute('class', 'renderer');
         document.body.appendChild(this.app.view);
+        Game.resize();
         this.app.start();
         this.setStage(Game.Stage.Menu);
         Game.setEvents();
-        Game.resize();
         this.app.ticker.add(function(delta) {
             Game.update(delta);
         });
@@ -173,11 +175,51 @@ var Game = Game || {
      * @param height || window.innerHeight
      */
     resize: function(width, height) {
-        width = width || Game.settings.video.resolution.width || window.innerWidth;
-        height = height || Game.settings.video.resolution.height || window.innerHeight;
-        Game.app.renderer.resize(width, height);
-        Game.settings.video.resolution.width = width;
-        Game.settings.video.resolution.height = height;
+
+        var viewport = {
+            width: window.innerWidth,
+            height: window.innerHeight
+        },
+            game = Game.game,
+            newGameWidth, newGameHeight, newGameX, newGameY;
+
+        // Determine game size
+        if (game.height / game.width > viewport.height / viewport.width) {
+            if (game.safeHeight / game.width > viewport.height / viewport.width) {
+                // A
+                newGameHeight = viewport.height * game.height / game.safeHeight;
+                newGameWidth = newGameHeight * game.width / game.height;
+            } else {
+                // B
+                newGameWidth = viewport.width;
+                newGameHeight = newGameWidth * game.height / game.width;
+            }
+        } else {
+            if (game.height / game.safeWidth > viewport.height / viewport.width) {
+                // C
+                newGameHeight = viewport.height;
+                newGameWidth = newGameHeight * game.width / game.height;
+            } else {
+                // D
+                newGameWidth = viewport.width * game.width / game.safeWidth;
+                newGameHeight = newGameWidth * game.height / game.width;
+            }
+        }
+
+        Game.app.renderer.view.style.width = newGameWidth + "px";
+        Game.app.renderer.view.style.height = newGameHeight + "px";
+
+        // newGameX = (viewport.width - newGameWidth) / 2;
+        // newGameY = (viewport.height - newGameHeight) / 2;
+
+        // Set the new padding of the game so it will be centered
+        // Game.renderer.view.style.margin = newGameY + "px " + newGameX + "px";
+        //
+        // width = width || window.innerWidth;
+        // height = height || window.innerHeight;
+        // Game.settings.video.resolution.width = width;
+        // Game.settings.video.resolution.height = height;
+        // Game.app.renderer.resize(newGameWidth, newGameHeight);
     },
 
     pointerLockChanged: function() {
@@ -211,7 +253,7 @@ var Game = Game || {
 
     /**
      * The main loop of the application
-     * @param t
+     * @param deltaTime
      */
     update: function(deltaTime) {
         if (Game.currentStage === null) {
@@ -219,7 +261,7 @@ var Game = Game || {
         }
         for (var i = 0; i < Game.currentStage.objects.length; i++) {
             var object = Game.currentStage.objects[i];
-            object.update();
+            object.update(deltaTime);
         }
     }
 };

@@ -1,9 +1,0 @@
-{
-  "name": "SpaceShooter",
-  "private": true,
-  "dependencies": {
-    "howler": "^1.1.25",
-    "lodash": "^4.17.4",
-    "pixi": "~4.4.0"
-  }
-}

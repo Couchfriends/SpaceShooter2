@@ -21,8 +21,7 @@ Game.Stage = function() {
             var sprite = this.preloadObjects[i];
             loader.add(sprite);
         }
-        loader.on('progress', function(process) {
-        });
+        loader.on('progress', function(process) {});
         loader.load(callback);
     };
 
