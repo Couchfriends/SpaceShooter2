@@ -37,9 +37,9 @@ Game.Entity.Player = function() {
         }
     };
 
-    this.update = function() {
-        this.object.x += Game.mouse.movementX;
-        this.object.y += Game.mouse.movementY;
+    this.update = function(delta) {
+        this.object.x += (Game.mouse.movementX * delta);
+        this.object.y += (Game.mouse.movementY * delta);
         if (this.object.x < 0) {
             this.object.x = 0;
         }

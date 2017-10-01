@@ -63,3 +63,5 @@ Game.Stage.MenuOptionsVideo = function() {
     }
 
 };
+
+Game.Stage.MenuOptionsVideo.prototype = Game.Stage.prototype;

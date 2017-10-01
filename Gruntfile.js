@@ -21,8 +21,13 @@ module.exports = function(grunt) {
         '<%= config.app %>/scripts/Game/Game.Interaction.js',
         '<%= config.app %>/scripts/Game/Entities/Game.Entity.js',
         '<%= config.app %>/scripts/Game/Entities/Game.Entity.Player.js',
+        '<%= config.app %>/scripts/Game/Entities/Weapons/Game.Weapon.js',
+        '<%= config.app %>/scripts/Game/Entities/Weapons/Game.Weapon.Basic.js',
+        '<%= config.app %>/scripts/Game/Entities/Weapons/Game.Bullet.js',
+        '<%= config.app %>/scripts/Game/Entities/Weapons/Game.Bullet.Basic.js',
+        '<%= config.app %>/scripts/Game/Entities/Enemies/Game.Entity.Enemy.js',
+        '<%= config.app %>/scripts/Game/Entities/Enemies/Game.Entity.Enemy.Asteroid.js',
         '<%= config.app %>/scripts/Game/Menu/Game.Button.js',
-        '<%= config.app %>/scripts/Game/Missions/Game.Missions.js',
         '<%= config.app %>/scripts/Game/Stages/Game.Stage.js',
         '<%= config.app %>/scripts/Game/Stages/Game.Stage.Menu.js',
         '<%= config.app %>/scripts/Game/Stages/Game.Stage.MenuGame.js',
@@ -30,6 +35,7 @@ module.exports = function(grunt) {
         '<%= config.app %>/scripts/Game/Stages/Game.Stage.MenuOptionsSounds.js',
         '<%= config.app %>/scripts/Game/Stages/Game.Stage.MenuOptionsVideo.js',
         '<%= config.app %>/scripts/Game/Stages/Game/Game.Stage.Game.js',
+        '<%= config.app %>/scripts/Game/Missions/Game.Missions.js',
         '<%= config.app %>/scripts/app.js'
     ]);
 

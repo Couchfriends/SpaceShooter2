@@ -71,3 +71,5 @@ Game.Stage.MenuGame = function() {
     }
 
 };
+
+Game.Stage.MenuGame.prototype = Game.Stage.prototype;

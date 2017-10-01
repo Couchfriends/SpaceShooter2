@@ -8,9 +8,9 @@ Game.Bullet.Basic = function() {
 
 
     this.stats = {
-        damage: 10,
+        damage: 1,
         speedX: 0,
-        speedY: -10
+        speedY: -15
     };
 
     this.init = function() {

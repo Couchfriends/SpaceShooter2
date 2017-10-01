@@ -7,7 +7,7 @@ Game.Weapon.Basic = function() {
     Game.Weapon.call(this);
 
     this.stats = {
-        interval: 10
+        interval: 6
     };
 
     this.counter = 10;
@@ -20,7 +20,7 @@ Game.Weapon.Basic = function() {
         object.anchor.x = .5;
         object.anchor.y = .5;
         this.object = object;
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 20; i++) {
             var bullet = new Game.Bullet.Basic();
             bullet.init();
             bullet.add();

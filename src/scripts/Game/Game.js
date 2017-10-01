@@ -66,13 +66,13 @@ var Game = Game || {
         });
         this.app.view.setAttribute('class', 'renderer');
         document.body.appendChild(this.app.view);
-        Game.resize();
         this.app.start();
         this.setStage(Game.Stage.Menu);
         Game.setEvents();
         this.app.ticker.add(function(delta) {
             Game.update(delta);
         });
+        Game.resize();
     },
 
     setEvents: function() {
@@ -251,17 +251,20 @@ var Game = Game || {
         Game.mouse.movementY = event.movementY;
     },
 
+    counter: 0,
+
     /**
      * The main loop of the application
-     * @param deltaTime
+     * @param delta
      */
-    update: function(deltaTime) {
+    update: function(delta) {
         if (Game.currentStage === null) {
             return;
         }
         for (var i = 0; i < Game.currentStage.objects.length; i++) {
             var object = Game.currentStage.objects[i];
-            object.update(deltaTime);
+            object.update(delta);
         }
+        Game.currentStage.update(delta);
     }
 };

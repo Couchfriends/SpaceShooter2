@@ -42,3 +42,5 @@ Game.Stage.Menu = function() {
     }
 
 };
+
+Game.Stage.Menu.prototype = Game.Stage.prototype;

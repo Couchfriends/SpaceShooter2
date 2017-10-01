@@ -66,3 +66,5 @@ Game.Stage.MenuOptionsSounds = function() {
     }
 
 };
+
+Game.Stage.MenuOptionsSounds.prototype = Game.Stage.prototype;

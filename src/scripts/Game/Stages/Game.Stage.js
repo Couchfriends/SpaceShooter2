@@ -40,8 +40,9 @@ Game.Stage = function() {
 
     /**
      * The render function of the stage
-     * @param t
+     * @param delta
      */
-    this.render = function(t) {};
+    this.update = function(delta) {
+    };
 
 };
