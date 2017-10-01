@@ -38,7 +38,7 @@ Game.Element.prototype = {
         this.fireEvents(this.events.add);
         Game.currentStage.objects.push(this);
         if (this.object !== null) {
-            this.object.element = this;
+            this.object.Element = this;
             to = to || Game.app.stage;
             to.addChild(this.object);
             this.addedTo = to;

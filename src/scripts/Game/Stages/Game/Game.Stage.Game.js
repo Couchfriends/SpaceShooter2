@@ -32,6 +32,7 @@ Game.Stage.Game = function () {
                 case "enemy":
                     var enemy = new this.nextEvent.enemy();
                     enemy.init();
+                    enemy.object.x = this.nextEvent.options.x;
                     enemy.add();
                     break;
             }

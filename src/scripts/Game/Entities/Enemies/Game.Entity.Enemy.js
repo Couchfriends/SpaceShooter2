@@ -6,6 +6,8 @@ Game.Entity.Enemy = function() {
 
     Game.Entity.call(this, arguments);
 
+    this.name = 'enemy';
+
     this.stats = {
         hp: 5,
         score: 10,

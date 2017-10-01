@@ -1,10 +1,12 @@
 /**
- * The main Entity of the game. For players and enemies
+ * Player main bullet object
  * @constructor
  */
 Game.Bullet = function() {
 
     Game.Element.call(this);
+
+    this.name = 'bullet';
 
     /**
      * List of weapons Elements with a shoot() option

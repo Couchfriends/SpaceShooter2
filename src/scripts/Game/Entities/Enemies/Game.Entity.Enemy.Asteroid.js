@@ -12,7 +12,7 @@ Game.Entity.Enemy.Asteroid = function() {
             sprite = 'asteroid002.png';
         }
         var object = new PIXI.Sprite.fromImage('./data/images/enemies/' + sprite);
-        object.x = Math.random() * Game.game.safeWidth;
+        object.x = Math.random() * Game.app.renderer.width;
         object.y = -100;
         object.anchor.x = .5;
         object.anchor.y = .5;

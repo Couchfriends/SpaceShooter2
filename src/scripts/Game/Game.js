@@ -6,6 +6,8 @@ var Game = Game || {
      */
     settings: {
         video: {
+            width: 1920,
+            height: 1080,
             particles: true
         },
         sound: {
@@ -21,10 +23,6 @@ var Game = Game || {
     status: 'pauze',
 
     game: {
-        width: 1920,
-        height: 1080,
-        safeWidth: 1680,
-        safeHeight: 720,
         score: 0,
         money: 0,
         difficultyMultiplier: 1,
@@ -60,9 +58,10 @@ var Game = Game || {
     run: function() {
         document.getElementById('loader').style.display = 'none';
         this.loadSettings();
-        // PIXI.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
-        this.app = new PIXI.Application(this.game.width, this.game.height, {
-            backgroundColor: 0x1099bb
+        PIXI.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+        // PIXI.BaseTexture.SCALE_MODE.DEFAULT = PIXI.BaseTexture.SCALE_MODE.NEAREST;
+        this.app = new PIXI.Application(Game.settings.video.width, Game.settings.video.height, {
+            backgroundColor: 0x100710
         });
         this.app.view.setAttribute('class', 'renderer');
         document.body.appendChild(this.app.view);
@@ -176,38 +175,20 @@ var Game = Game || {
      */
     resize: function(width, height) {
 
-        var viewport = {
-            width: window.innerWidth,
-            height: window.innerHeight
-        },
-            game = Game.game,
-            newGameWidth, newGameHeight, newGameX, newGameY;
+        var widthToHeight = 16 / 9;
+        var newWidth = window.innerWidth;
+        var newHeight = window.innerHeight;
+        var newWidthToHeight = newWidth / newHeight;
 
-        // Determine game size
-        if (game.height / game.width > viewport.height / viewport.width) {
-            if (game.safeHeight / game.width > viewport.height / viewport.width) {
-                // A
-                newGameHeight = viewport.height * game.height / game.safeHeight;
-                newGameWidth = newGameHeight * game.width / game.height;
-            } else {
-                // B
-                newGameWidth = viewport.width;
-                newGameHeight = newGameWidth * game.height / game.width;
-            }
+        if (newWidthToHeight > widthToHeight) {
+            newWidth = newHeight * widthToHeight;
         } else {
-            if (game.height / game.safeWidth > viewport.height / viewport.width) {
-                // C
-                newGameHeight = viewport.height;
-                newGameWidth = newGameHeight * game.width / game.height;
-            } else {
-                // D
-                newGameWidth = viewport.width * game.width / game.safeWidth;
-                newGameHeight = newGameWidth * game.height / game.width;
-            }
+            newHeight = newWidth / widthToHeight;
         }
 
-        Game.app.renderer.view.style.width = newGameWidth + "px";
-        Game.app.renderer.view.style.height = newGameHeight + "px";
+        Game.app.renderer.view.style.width = newWidth + 'px';
+        Game.app.renderer.view.style.height = newHeight + 'px';
+
 
         // newGameX = (viewport.width - newGameWidth) / 2;
         // newGameY = (viewport.height - newGameHeight) / 2;
@@ -219,7 +200,7 @@ var Game = Game || {
         // height = height || window.innerHeight;
         // Game.settings.video.resolution.width = width;
         // Game.settings.video.resolution.height = height;
-        // Game.app.renderer.resize(newGameWidth, newGameHeight);
+        //Game.app.renderer.resize(newWidth, newHeight);
     },
 
     pointerLockChanged: function() {

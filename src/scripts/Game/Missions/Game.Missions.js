@@ -7,12 +7,42 @@ Game.missions = [{
         {
             "type": "enemy",
             "enemy": Game.Entity.Enemy.Asteroid,
+            "options": {
+                "x": 100
+            },
             "counter": 120
         },
         {
             "type": "enemy",
             "enemy": Game.Entity.Enemy.Asteroid,
-            "counter": 160
+            "options": {
+                "x": 200
+            },
+            "counter": 180
+        },
+        {
+            "type": "enemy",
+            "enemy": Game.Entity.Enemy.Asteroid,
+            "options": {
+                "x": 300
+            },
+            "counter": 240
+        },
+        {
+            "type": "enemy",
+            "enemy": Game.Entity.Enemy.Asteroid,
+            "options": {
+                "x": 400
+            },
+            "counter": 300
+        },
+        {
+            "type": "enemy",
+            "enemy": Game.Entity.Enemy.Asteroid,
+            "options": {
+                "x": 500
+            },
+            "counter": 360
         }
     ]
 }];

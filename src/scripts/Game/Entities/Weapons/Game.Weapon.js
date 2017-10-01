@@ -6,6 +6,8 @@ Game.Weapon = function() {
 
     Game.Element.call(this);
 
+    this.name = 'weapon';
+
     this.bullets = [];
 
     this.currentBulletIndex = 0;
