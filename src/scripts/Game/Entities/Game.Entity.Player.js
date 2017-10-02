@@ -26,13 +26,26 @@ Game.Entity.Player = function () {
         hp: 200
     };
 
+    /**
+     * Textures for player (when moving left, right or in default position)
+     * @type {{left: null, standard: null, right: null}}
+     */
+    this.textures = {
+        left: '',
+        standard: '',
+        right: ''
+    };
+
     this.die = function () {
         Game.loadGame();
         Game.setStage(Game.Stage.MenuGame);
     };
 
     this.init = function () {
-        var object = new PIXI.Sprite.fromImage('./data/images/ship/ship001/hull.png');
+        this.textures.left = PIXI.Texture.fromFrame('./data/images/ship/ship001/player-left.png');
+        this.textures.right = PIXI.Texture.fromFrame('./data/images/ship/ship001/player-right.png');
+        this.textures.standard = PIXI.Texture.fromFrame('./data/images/ship/ship001/player.png');
+        var object = new PIXI.Sprite(this.textures.standard);
         object.y = Game.app.renderer.height - 100;
         object.x = Game.app.renderer.width / 2;
         object.anchor.x = .5;
@@ -51,7 +64,7 @@ Game.Entity.Player = function () {
                 var Particle = new Game.Element();
                 Particle.startPos = {
                     x: Math.random() * 8 - 4,
-                    y: Math.random() * 8 + 5
+                    y: Math.random() * 8 + 20
                 };
                 var pixel = new PIXI.Graphics();
                 var size = Math.random() * 3;
@@ -104,12 +117,26 @@ Game.Entity.Player = function () {
             movementY = 0;
         }
 
+        if (movementX <= -1) {
+            this.object.setTexture(this.textures.left);
+        }
+        else if (movementX >= 1) {
+            this.object.setTexture(this.textures.right);
+        }
+        else {
+            this.object.setTexture(this.textures.standard);
+        }
+
         this.movementX = movementX;
         this.movementY = movementY;
     };
 
     this._updateParticles = function (delta) {
-        if (this.particles.length === 0 || (this.movementX === 0 && this.movementY === 0)) {
+        if (this.particles.length === 0) {
+            return;
+        }
+        if (this.movementX >= -1 && this.movementX <= 1 &&
+        this.movementY >= -1 && this.movementY <= 1) {
             return;
         }
         if (this.particles[this.currentParticleIndex].object.visible === true) {

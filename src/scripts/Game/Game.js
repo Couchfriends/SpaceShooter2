@@ -2,6 +2,10 @@ var Game = Game || {
 
     app: null,
     /**
+     * Bump collision plugin
+     */
+    bump: null,
+    /**
      * Default settings
      */
     settings: {
@@ -57,6 +61,7 @@ var Game = Game || {
 
     run: function() {
         document.getElementById('loader').style.display = 'none';
+        this.bump = new Bump(PIXI);
         this.loadSettings();
         PIXI.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
         // PIXI.BaseTexture.SCALE_MODE.DEFAULT = PIXI.BaseTexture.SCALE_MODE.NEAREST;
@@ -170,10 +175,8 @@ var Game = Game || {
 
     /**
      * Resize the resolution of the game
-     * @param width || window.innerWidth
-     * @param height || window.innerHeight
      */
-    resize: function(width, height) {
+    resize: function() {
 
         var widthToHeight = 16 / 9;
         var newWidth = window.innerWidth;
@@ -188,19 +191,6 @@ var Game = Game || {
 
         Game.app.renderer.view.style.width = newWidth + 'px';
         Game.app.renderer.view.style.height = newHeight + 'px';
-
-
-        // newGameX = (viewport.width - newGameWidth) / 2;
-        // newGameY = (viewport.height - newGameHeight) / 2;
-
-        // Set the new padding of the game so it will be centered
-        // Game.renderer.view.style.margin = newGameY + "px " + newGameX + "px";
-        //
-        // width = width || window.innerWidth;
-        // height = height || window.innerHeight;
-        // Game.settings.video.resolution.width = width;
-        // Game.settings.video.resolution.height = height;
-        //Game.app.renderer.resize(newWidth, newHeight);
     },
 
     pointerLockChanged: function() {
@@ -231,8 +221,6 @@ var Game = Game || {
         Game.mouse.movementX = event.movementX;
         Game.mouse.movementY = event.movementY;
     },
-
-    counter: 0,
 
     /**
      * The main loop of the application

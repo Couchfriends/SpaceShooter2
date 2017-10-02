@@ -6,12 +6,9 @@ Game.Entity.Enemy.Asteroid = function() {
 
     Game.Entity.Enemy.call(this, arguments);
 
-    this.init = function() {
-        var sprite = 'asteroid001.png';
-        if (Math.floor(Math.random()*2) === 1) {
-            sprite = 'asteroid002.png';
-        }
-        var object = new PIXI.Sprite.fromImage('./data/images/enemies/' + sprite);
+    this.init = function(type) {
+        type = type || 'standard';
+        var object = new PIXI.Sprite.fromImage('./data/images/enemies/asteroid001.png');
         object.x = Math.random() * Game.app.renderer.width;
         object.y = -100;
         object.anchor.x = .5;

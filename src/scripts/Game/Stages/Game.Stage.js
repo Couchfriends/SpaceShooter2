@@ -29,12 +29,11 @@ Game.Stage = function() {
 
     /**
      * Callback before a new stage is rendered.
-     * @param callback the callback after exit is complete
      */
     this.stop = function() {
-        for (var i = 0; i < this.objects.length; i++) {
-            var object = this.objects[i];
-            object.remove();
+        var i = this.objects.length;
+        while (i--) {
+            this.objects[i].remove();
         }
     };
 

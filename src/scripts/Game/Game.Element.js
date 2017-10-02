@@ -4,6 +4,9 @@
  */
 Game.Element = function() {
 
+
+    this.addedTo = {};
+
     /**
      * Pixi.js object
      * @type {{}}
@@ -28,8 +31,6 @@ Game.Element = function() {
 
 Game.Element.prototype = {
 
-    addedTo: {},
-
     init: function() {
 
     },
@@ -51,15 +52,17 @@ Game.Element.prototype = {
             this.addedTo.removeChild(this.object);
         }
         var indexOf = Game.currentStage.objects.indexOf(this);
-        delete Game.currentStage.objects[indexOf]; //.splice(indexOf, 1);
+        Game.currentStage.objects.splice(indexOf, 1);
     },
 
     /**
      * Update function in gameloop. Might return false if update is not allowed.
-     * @param time
+     * @param delta
      * @returns {boolean}
      */
-    update: function(delta) {},
+    update: function(delta) {
+
+    },
 
     fireEvents: function(events) {
         for (var i = 0; i < events.length; i++) {
