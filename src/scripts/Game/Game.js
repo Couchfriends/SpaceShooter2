@@ -59,7 +59,19 @@ var Game = Game || {
      */
     currentStage: null,
 
-    run: function() {
+    /**
+     * Layers for zindexing
+     */
+    layerBackgroundStars: new PIXI.DisplayGroup(-4, true),
+    layerBackgroundFar: new PIXI.DisplayGroup(-3, true),
+    layerBackground: new PIXI.DisplayGroup(-2, true),
+    layerBackgroundNear: new PIXI.DisplayGroup(-1, true),
+    layerDefault: new PIXI.DisplayGroup(0, true),
+    layerForegroundNear: new PIXI.DisplayGroup(1, true),
+    layerForeground: new PIXI.DisplayGroup(2, true),
+    layerForegroundFar: new PIXI.DisplayGroup(3, true),
+
+    run: function () {
         document.getElementById('loader').style.display = 'none';
         this.bump = new Bump(PIXI);
         this.loadSettings();
@@ -70,26 +82,54 @@ var Game = Game || {
         });
         this.app.view.setAttribute('class', 'renderer');
         document.body.appendChild(this.app.view);
+
+        this.app.stage.displayList = new PIXI.DisplayList();
+
+        this.layerBackgroundStars.on('add', function (sprite) {
+            sprite.zOrder = -4;
+        });
+        this.layerBackgroundFar.on('add', function (sprite) {
+            sprite.zOrder = -3;
+        });
+        this.layerBackground.on('add', function (sprite) {
+            sprite.zOrder = -2;
+        });
+        this.layerBackgroundNear.on('add', function (sprite) {
+            sprite.zOrder = -1;
+        });
+        this.layerDefault.on('add', function (sprite) {
+            sprite.zOrder = 0;
+        });
+        this.layerForegroundNear.on('add', function (sprite) {
+            sprite.zOrder = 1;
+        });
+        this.layerForeground.on('add', function (sprite) {
+            sprite.zOrder = 2;
+        });
+        this.layerForegroundFar.on('add', function (sprite) {
+            sprite.zOrder = 3;
+        });
+
         this.app.start();
         this.setStage(Game.Stage.Menu);
         Game.setEvents();
-        this.app.ticker.add(function(delta) {
+        this.app.ticker.add(function (delta) {
             Game.update(delta);
         });
         Game.resize();
     },
 
-    setEvents: function() {
-        window.onresize = function() {
+    setEvents: function () {
+        window.onresize = function () {
             Game.resize();
         };
-        Game.app.view.oncontextmenu = function(e) {
+        Game.app.view.oncontextmenu = function (e) {
             e.preventDefault();
         };
         document.addEventListener('pointerlockchange', Game.pointerLockChanged, false);
     },
 
-    loadSettings: function() {
+    loadSettings: function () {
         var storedSettings = window.localStorage.getItem('settings');
         if (storedSettings === null) {
             return Game.settings;
@@ -102,13 +142,13 @@ var Game = Game || {
         return _.merge(Game.settings, storedSettings);
     },
 
-    saveSetting: function(objSetting) {
+    saveSetting: function (objSetting) {
         var settings = _.merge(this.loadSettings(), objSetting);
         window.localStorage.setItem('settings', JSON.stringify(settings));
         Game.settings = settings;
     },
 
-    loadGame: function() {
+    loadGame: function () {
         var storedGame = window.localStorage.getItem('game');
         if (storedGame === null) {
             return Game.game;
@@ -121,7 +161,7 @@ var Game = Game || {
         return _.merge(Game.game, storedGame);
     },
 
-    saveGame: function(objGame) {
+    saveGame: function (objGame) {
         var game = _.merge(this.loadGame(), objGame);
         window.localStorage.setItem('game', JSON.stringify(game));
         Game.game = game;
@@ -131,7 +171,7 @@ var Game = Game || {
      * Set the current mission
      * @param missionIndex optional next mission index. If the last mission is finished, restart with more difficult.
      */
-    setMission: function(missionIndex) {
+    setMission: function (missionIndex) {
         missionIndex = missionIndex || Game.game.currentMissionIndex;
         var difficultyMultiplier = Game.game.difficultyMultiplier;
         if (typeof Game.missions[missionIndex] === 'undefined') {
@@ -145,12 +185,13 @@ var Game = Game || {
         });
     },
 
-    setStage: function(Stage) {
+    setStage: function (Stage) {
         if (this.currentStage !== null) {
             this.currentStage.stop();
         }
         this.currentStage = new Stage();
-        this.currentStage.load(function() {
+        this.currentStage.init();
+        this.currentStage.load(function () {
             Game.currentStage.start();
         });
     },
@@ -159,7 +200,7 @@ var Game = Game || {
      * Add score. Do not save the game here.
      * @param score
      */
-    addScore: function(score) {
+    addScore: function (score) {
         score = score || 0;
         Game.game.score += score;
     },
@@ -168,7 +209,7 @@ var Game = Game || {
      * Add money. Do not save the game here.
      * @param money
      */
-    addMoney: function(money) {
+    addMoney: function (money) {
         money = money || 0;
         Game.game.money += money;
     },
@@ -176,7 +217,7 @@ var Game = Game || {
     /**
      * Resize the resolution of the game
      */
-    resize: function() {
+    resize: function () {
 
         var widthToHeight = 16 / 9;
         var newWidth = window.innerWidth;
@@ -193,31 +234,31 @@ var Game = Game || {
         Game.app.renderer.view.style.height = newHeight + 'px';
     },
 
-    pointerLockChanged: function() {
+    pointerLockChanged: function () {
         if (document.pointerLockElement !== Game.app.renderer.view) {
             Game._removePointerLock();
         }
     },
 
-    pointerLock: function() {
+    pointerLock: function () {
         Game.app.renderer.view.requestPointerLock();
         Game.app.renderer.view.addEventListener("mousemove", Game.updateMousePosition, false);
         Game.status = 'play';
     },
 
-    exitPointerLock: function() {
+    exitPointerLock: function () {
         document.exitPointerLock();
         Game._removePointerLock();
     },
 
-    _removePointerLock: function() {
+    _removePointerLock: function () {
         Game.app.renderer.view.removeEventListener("mousemove", Game.updateMousePosition, false);
         Game.mouse.movementX = 0;
         Game.mouse.movementY = 0;
         Game.status = 'pauze';
     },
 
-    updateMousePosition: function(event) {
+    updateMousePosition: function (event) {
         Game.mouse.movementX = event.movementX;
         Game.mouse.movementY = event.movementY;
     },
@@ -226,7 +267,7 @@ var Game = Game || {
      * The main loop of the application
      * @param delta
      */
-    update: function(delta) {
+    update: function (delta) {
         if (Game.currentStage === null) {
             return;
         }

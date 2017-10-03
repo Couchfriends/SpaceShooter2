@@ -14,6 +14,7 @@ module.exports = function(grunt) {
         sourceFiles.push('node_modules/' + depPkg + '/dist/' + depPgkFile + '.js');
     }
     sourceFiles.push([
+        '<%= config.app %>/scripts/Utility/pixi.display.js',
         '<%= config.app %>/scripts/Utility/Helpers.js',
         '<%= config.app %>/scripts/Utility/bump.js',
         '<%= config.app %>/scripts/Game/Game.js',

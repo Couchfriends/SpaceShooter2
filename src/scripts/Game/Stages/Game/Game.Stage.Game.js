@@ -30,6 +30,15 @@ Game.Stage.Game = function () {
     this.explosions = [];
     this.currentExplosionIndex = 0;
 
+    this.init = function () {
+        for (var i = 0; i < Game.currentMission.events.length; i++) {
+            var event = Game.currentMission.events[i];
+            if (typeof event.texture !== 'undefined') {
+                this.preloadObjects.push(event.texture);
+            }
+        }
+    };
+
     this.start = function () {
         var Player = new Game.Entity.Player();
         Player.init();
@@ -92,7 +101,49 @@ Game.Stage.Game = function () {
                     enemy.object.x = this.nextEvent.options.x;
                     enemy.add();
                     break;
+
+                case "background":
+                    var Background = new Game.Element();
+                    Background.eventSettings = this.nextEvent.options;
+                    var object = new PIXI.Sprite.fromImage(this.nextEvent.texture);
+                    object.displayGroup = this.nextEvent.options.layer || Game.layerBackground;
+                    object.anchor.x = .5;
+                    object.anchor.y = .5;
+                    object.x = this.nextEvent.options.x;
+                    object.y = this.nextEvent.options.y;
+                    Background.object = object;
+                    Background.update = function (delta) {
+                        this.object.x += (this.eventSettings.speed.x * delta);
+                        this.object.y += (this.eventSettings.speed.y * delta);
+                        if (this.object.y > (this.eventSettings.remove.y)) {
+                            this.remove();
+                        }
+                    };
+                    Background.add();
+                    break;
+                case "background-stars":
+                    var Background = new Game.Element();
+                    Background.eventSettings = this.nextEvent.options;
+                    var texture = PIXI.Texture.fromImage(this.nextEvent.texture);
+                    var object = new PIXI.extras.TilingSprite(
+                        texture,
+                        Game.app.renderer.width,
+                        Game.app.renderer.height
+                    );
+                    object.displayGroup = this.nextEvent.options.layer || Game.layerBackgroundStars;
+                    object.anchor.x = .5;
+                    object.anchor.y = .5;
+                    object.x = this.nextEvent.options.x;
+                    object.y = this.nextEvent.options.y;
+                    Background.object = object;
+                    Background.update = function (delta) {
+                        this.object.tilePosition.x += (this.eventSettings.speed.x * delta);
+                        this.object.tilePosition.y += (this.eventSettings.speed.y * delta);
+                    };
+                    Background.add();
+                    break;
             }
+
             var nextIndex = Game.currentMission.events.indexOf(this.nextEvent) + 1;
             if (typeof Game.currentMission.events[nextIndex] === 'undefined') {
                 this.nextEvent = false;
@@ -119,7 +170,7 @@ Game.Stage.Game = function () {
                 return;
             }
             var difference = (Game.game.money - this.money);
-            var addMoney = (difference.toString().length-1) * 10;
+            var addMoney = (difference.toString().length - 1) * 10;
             if (addMoney === 0) {
                 addMoney = 1;
             }

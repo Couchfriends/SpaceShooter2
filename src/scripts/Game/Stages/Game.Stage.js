@@ -9,6 +9,13 @@ Game.Stage = function() {
     this.preloadObjects = [];
 
     /**
+     * Constructor
+     */
+    this.init = function() {
+
+    };
+
+    /**
      * Load the objects for this stage
      * Callback should always include start() of the currentScene. Game.currentScene.start();
      */

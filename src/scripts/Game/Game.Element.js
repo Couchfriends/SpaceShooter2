@@ -41,6 +41,7 @@ Game.Element.prototype = {
         if (this.object !== null) {
             this.object.Element = this;
             to = to || Game.app.stage;
+            this.object.displayGroup = this.object.displayGroup || Game.layerDefault;
             to.addChild(this.object);
             this.addedTo = to;
         }
