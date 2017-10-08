@@ -9,7 +9,7 @@ Game.Bullet.Basic = function () {
     this.stats = {
         damage: 1,
         speedX: 0,
-        speedY: -15
+        speedY: -10
     };
 };
 
@@ -18,8 +18,8 @@ Game.Bullet.Basic.prototype = Object.create(Game.Bullet.prototype);
 Game.Bullet.Basic.prototype.constructor = Game.Bullet;
 
 Game.Bullet.Basic.prototype.init = function () {
-    var object = new PIXI.Sprite.fromImage('./data/images/bullets/basic-bullet.png');
-    object.y = 10;
+    var object = new PIXI.Sprite.fromImage('./data/images/bullets/bullet-basic.gif');
+    object.y = -10;
     object.anchor.x = .5;
     object.anchor.y = .5;
     object.visible = false;

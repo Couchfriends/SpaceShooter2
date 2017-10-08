@@ -8,7 +8,7 @@ Game.Entity.Enemy.Asteroid = function() {
 
     this.init = function(type) {
         type = type || 'standard';
-        var object = new PIXI.Sprite.fromImage('./data/images/enemies/asteroid001.png');
+        var object = new PIXI.Sprite.fromImage('./data/images/enemies/asteroid001.gif');
         object.x = Math.random() * Game.app.renderer.width;
         object.y = -100;
         object.anchor.x = .5;

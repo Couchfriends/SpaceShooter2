@@ -6,7 +6,7 @@ Game.missions = [{
     "events": [
         {
             "type": "background-stars",
-            "texture": "./data/images/backgrounds/stars.png",
+            "texture": "./data/images/backgrounds/stars.gif",
             "options": {
                 "layer": Game.layerBackgroundStars,
                 "x": Game.settings.video.width / 2,
@@ -25,18 +25,35 @@ Game.missions = [{
             "type": "background",
             "texture": "./data/images/backgrounds/earth.gif",
             "options": {
-                "layer": Game.layerBackgroundNear,
+                "layer": Game.layerBackground,
                 "x": Game.settings.video.width / 2,
-                "y": -500,
+                "y": -256,
                 "speed": {
                     "x": 0,
                     "y": .5
                 },
                 "remove": {
-                    "x": 900
+                    "y":  Game.settings.video.height + 256
                 }
             },
             "counter": 0
+        },
+        {
+            "type": "background",
+            "texture": "./data/images/backgrounds/moon.gif",
+            "options": {
+                "layer": Game.layerBackgroundNear,
+                "x": (Game.settings.video.width / 2) + 200,
+                "y": -256,
+                "speed": {
+                    "x": 0,
+                    "y": .6
+                },
+                "remove": {
+                    "y": Game.settings.video.height + 128
+                }
+            },
+            "counter": 360
         },
         // {
         //     "type": "background",
@@ -61,7 +78,7 @@ Game.missions = [{
             "options": {
                 "x": 100
             },
-            "counter": 800
+            "counter": 400
         },
         {
             "type": "enemy",
@@ -69,7 +86,7 @@ Game.missions = [{
             "options": {
                 "x": 200
             },
-            "counter": 850
+            "counter": 50
         },
         {
             "type": "enemy",
@@ -77,7 +94,7 @@ Game.missions = [{
             "options": {
                 "x": 300
             },
-            "counter": 900
+            "counter": 50
         },
         {
             "type": "enemy",
@@ -85,7 +102,7 @@ Game.missions = [{
             "options": {
                 "x": 400
             },
-            "counter": 950
+            "counter": 50
         },
         {
             "type": "enemy",
@@ -93,7 +110,115 @@ Game.missions = [{
             "options": {
                 "x": 500
             },
-            "counter": 1000
+            "counter": 50
+        },
+        {
+            "type": "background",
+            "texture": "./data/images/backgrounds/enemy002.gif",
+            "options": {
+                "layer": Game.layerBackgroundFar,
+                "x": Game.settings.video.width + 16,
+                "y": (Game.settings.video.height / 2) - 100,
+                "speed": {
+                    "x": -2,
+                    "y": 0
+                },
+                "remove": {
+                    "x": -16
+                }
+            },
+            "counter": 20
+        },
+        {
+            "type": "enemy",
+            "enemy": Game.Entity.Enemy.Asteroid,
+            "options": {
+                "x": Game.settings.video.width - 100
+            },
+            "counter": 250
+        },
+        {
+            "type": "enemy",
+            "enemy": Game.Entity.Enemy.Asteroid,
+            "options": {
+                "x": Game.settings.video.width - 200
+            },
+            "counter": 50
+        },
+        {
+            "type": "enemy",
+            "enemy": Game.Entity.Enemy.Asteroid,
+            "options": {
+                "x": Game.settings.video.width - 300
+            },
+            "counter": 50
+        },
+        {
+            "type": "enemy",
+            "enemy": Game.Entity.Enemy.Asteroid,
+            "options": {
+                "x": Game.settings.video.width - 400
+            },
+            "counter": 50
+        },
+        {
+            "type": "enemy",
+            "enemy": Game.Entity.Enemy.Asteroid,
+            "options": {
+                "x": Game.settings.video.width - 500
+            },
+            "counter": 50
+        },
+        {
+            "type": "background",
+            "texture": "./data/images/backgrounds/enemy001.gif",
+            "options": {
+                "layer": Game.layerBackgroundFar,
+                "x": Game.settings.video.width + 16,
+                "y": Game.settings.video.height / 2,
+                "speed": {
+                    "x": -4,
+                    "y": 0
+                },
+                "remove": {
+                    "x": -16
+                }
+            },
+            "counter": 250
+        },
+        {
+            "type": "background",
+            "texture": "./data/images/backgrounds/enemy001.gif",
+            "options": {
+                "layer": Game.layerBackgroundFar,
+                "x": Game.settings.video.width + 16,
+                "y": Game.settings.video.height / 2,
+                "speed": {
+                    "x": -4,
+                    "y": 0
+                },
+                "remove": {
+                    "x": -16
+                }
+            },
+            "counter": 20
+        },
+        {
+            "type": "background",
+            "texture": "./data/images/backgrounds/enemy001.gif",
+            "options": {
+                "layer": Game.layerBackgroundFar,
+                "x": Game.settings.video.width + 16,
+                "y": Game.settings.video.height / 2,
+                "speed": {
+                    "x": -4,
+                    "y": 0
+                },
+                "remove": {
+                    "x": -16
+                }
+            },
+            "counter": 20
         }
     ]
 }];

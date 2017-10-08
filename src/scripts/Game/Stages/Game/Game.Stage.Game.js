@@ -7,9 +7,9 @@ Game.Stage.Game = function () {
     Game.Stage.call(this, arguments);
 
     this.preloadObjects = [
-        './data/images/ship/ship001/player.png',
-        './data/images/ship/ship001/player-left.png',
-        './data/images/ship/ship001/player-right.png',
+        './data/images/ship/ship001/hull.gif',
+        './data/images/weapons/bullets/bullet-basic.gif',
+        './data/images/enemies/asteroid001.gif',
         './data/images/ship/ship001/gun001.png',
         './data/images/explosions/explosion001_001.png',
         './data/images/explosions/explosion001_002.png',
@@ -33,7 +33,7 @@ Game.Stage.Game = function () {
     this.init = function () {
         for (var i = 0; i < Game.currentMission.events.length; i++) {
             var event = Game.currentMission.events[i];
-            if (typeof event.texture !== 'undefined') {
+            if (typeof event.texture !== 'undefined' && !_.contains(this.preloadObjects, event.texture)) {
                 this.preloadObjects.push(event.texture);
             }
         }
@@ -94,6 +94,7 @@ Game.Stage.Game = function () {
         }
         this.gameCounter += delta;
         if (this.nextEvent.counter < this.gameCounter) {
+            this.gameCounter = 0;
             switch (this.nextEvent.type) {
                 case "enemy":
                     var enemy = new this.nextEvent.enemy();
@@ -115,7 +116,16 @@ Game.Stage.Game = function () {
                     Background.update = function (delta) {
                         this.object.x += (this.eventSettings.speed.x * delta);
                         this.object.y += (this.eventSettings.speed.y * delta);
-                        if (this.object.y > (this.eventSettings.remove.y)) {
+                        if (this.eventSettings.remove.y > 0 && this.object.y > this.eventSettings.remove.y) {
+                            this.remove();
+                        }
+                        else if (this.eventSettings.remove.y < 0 && this.object.y < this.eventSettings.remove.y) {
+                            this.remove();
+                        }
+                        if (this.eventSettings.remove.x > 0 && this.object.x > this.eventSettings.remove.x) {
+                            this.remove();
+                        }
+                        else if (this.eventSettings.remove.x = 0 && this.object.x < this.eventSettings.remove.x) {
                             this.remove();
                         }
                     };

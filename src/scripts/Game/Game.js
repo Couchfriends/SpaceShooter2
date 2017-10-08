@@ -75,7 +75,9 @@ var Game = Game || {
         document.getElementById('loader').style.display = 'none';
         this.bump = new Bump(PIXI);
         this.loadSettings();
-        PIXI.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+        PIXI.settings.RESOLUTION = window.devicePixelRatio;
+        PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+        // PIXI.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
         // PIXI.BaseTexture.SCALE_MODE.DEFAULT = PIXI.BaseTexture.SCALE_MODE.NEAREST;
         this.app = new PIXI.Application(Game.settings.video.width, Game.settings.video.height, {
             backgroundColor: 0x100710

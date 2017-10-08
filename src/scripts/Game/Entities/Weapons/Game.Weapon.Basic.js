@@ -7,7 +7,7 @@ Game.Weapon.Basic = function() {
     Game.Weapon.call(this);
 
     this.stats = {
-        interval: 6
+        interval: 8
     };
 
     this.counter = 10;
@@ -49,7 +49,7 @@ Game.Weapon.Basic = function() {
         var position = this.object.toGlobal({x:0, y:0});
         currentBullet.object.visible = true;
         currentBullet.object.x = position.x;
-        currentBullet.object.y = position.y;
+        currentBullet.object.y = position.y - 32;
         this.currentBulletIndex += 1;
         if (this.currentBulletIndex >= this.bullets.length) {
             this.currentBulletIndex = 0;

@@ -42,9 +42,9 @@ Game.Entity.Player = function () {
     };
 
     this.init = function () {
-        this.textures.left = PIXI.Texture.fromFrame('./data/images/ship/ship001/player-left.png');
-        this.textures.right = PIXI.Texture.fromFrame('./data/images/ship/ship001/player-right.png');
-        this.textures.standard = PIXI.Texture.fromFrame('./data/images/ship/ship001/player.png');
+        this.textures.left = PIXI.Texture.fromFrame('./data/images/ship/ship001/hull.gif');
+        this.textures.right = PIXI.Texture.fromFrame('./data/images/ship/ship001/hull.gif');
+        this.textures.standard = PIXI.Texture.fromFrame('./data/images/ship/ship001/hull.gif');
         var object = new PIXI.Sprite(this.textures.standard);
         object.y = Game.app.renderer.height - 100;
         object.x = Game.app.renderer.width / 2;
@@ -63,13 +63,13 @@ Game.Entity.Player = function () {
             for (var i = 0; i < 50; i++) {
                 var Particle = new Game.Element();
                 Particle.startPos = {
-                    x: Math.random() * 8 - 4,
-                    y: Math.random() * 8 + 20
+                    x: Math.random() * 4 - 2,
+                    y: 16
                 };
                 var pixel = new PIXI.Graphics();
                 var size = Math.random() * 3;
                 Particle.speed = 1 + (Math.random() * 3);
-                pixel.beginFill(0xFF0000).drawRect(Particle.startPos.x, Particle.startPos.y, size, size);
+                pixel.beginFill(0xffe957).drawRect(Particle.startPos.x, Particle.startPos.y, size, size);
                 pixel.visible = false;
                 Particle.object = pixel;
                 Particle.update = function (delta) {
