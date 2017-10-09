@@ -62,14 +62,19 @@ Game.Entity.Player = function () {
         if (Game.settings.video.particles === true) {
             for (var i = 0; i < 50; i++) {
                 var Particle = new Game.Element();
+                var leftOrRight = Math.floor(Math.random() * 2);
+                var x = Math.random() * 3 - 8;
+                if (leftOrRight === 1) {
+                    x = Math.random() * 2 + 4;
+                }
                 Particle.startPos = {
-                    x: Math.random() * 4 - 2,
-                    y: 16
+                    x: x,
+                    y: 8
                 };
                 var pixel = new PIXI.Graphics();
                 var size = Math.random() * 3;
                 Particle.speed = 1 + (Math.random() * 3);
-                pixel.beginFill(0xffe957).drawRect(Particle.startPos.x, Particle.startPos.y, size, size);
+                pixel.beginFill(0xa0bd00).drawRect(Particle.startPos.x, Particle.startPos.y, size, size);
                 pixel.visible = false;
                 Particle.object = pixel;
                 Particle.update = function (delta) {
@@ -133,10 +138,6 @@ Game.Entity.Player = function () {
 
     this._updateParticles = function (delta) {
         if (this.particles.length === 0) {
-            return;
-        }
-        if (this.movementX >= -1 && this.movementX <= 1 &&
-        this.movementY >= -1 && this.movementY <= 1) {
             return;
         }
         if (this.particles[this.currentParticleIndex].object.visible === true) {

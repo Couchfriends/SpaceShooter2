@@ -18,7 +18,6 @@ Game.Entity.Enemy.Asteroid = function() {
 
     this.update = function(delta) {
         this.object.y += (2 * delta);
-        this.object.rotation += 0.01 * delta;
     }
 
 };
